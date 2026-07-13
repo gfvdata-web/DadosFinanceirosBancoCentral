@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meios de Pagamento no Brasil — Painel Analítico</title>
+  <link rel="stylesheet" href="css/estilo.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="conteiner">
+      <p class="sobrelinha">Banco Central do Brasil · Dados Abertos</p>
+      <h1>Meios de Pagamento no Brasil</h1>
+      <p class="subtitulo" id="descricao-fonte">Quantidade e valor de movimentação por mês e forma de pagamento.</p>
+      <p class="meta-info" id="meta-info">Carregando…</p>
+    </div>
+  </header>
+
+  <main class="conteiner">
+    <!-- Controle de métrica -->
+    <section class="controles" aria-label="Seleção de métrica">
+      <span class="controles-rotulo">Métrica:</span>
+      <div class="alternador" role="tablist">
+        <button class="alt-btn ativo" data-metrica="valor" role="tab">Valor (R$)</button>
+        <button class="alt-btn" data-metrica="quantidade" role="tab">Quantidade</button>
+      </div>
+    </section>
+
+    <!-- KPIs -->
+    <section class="kpis" id="kpis" aria-label="Indicadores-chave"></section>
+
+    <!-- Gráficos -->
+    <section class="graficos">
+      <article class="cartao grafico-grande">
+        <h2>Evolução mensal</h2>
+        <p class="cartao-desc" id="titulo-evolucao">Por forma de pagamento ao longo do tempo.</p>
+        <div class="canvas-wrap"><canvas id="gEvolucao"></canvas></div>
+      </article>
+      <article class="cartao">
+        <h2>Participação</h2>
+        <p class="cartao-desc" id="titulo-participacao">Fatia acumulada de cada forma no período.</p>
+        <div class="canvas-wrap"><canvas id="gParticipacao"></canvas></div>
+      </article>
+    </section>
+
+    <!-- Ranking / métricas -->
+    <section class="cartao">
+      <h2>Ranking e métricas por forma</h2>
+      <p class="cartao-desc">Participação, crescimento interanual (YoY), CAGR e ticket médio do último mês.</p>
+      <div class="tabela-wrap">
+        <table class="tabela" id="tabela-ranking">
+          <thead>
+            <tr>
+              <th>Forma</th>
+              <th class="num">Part. valor</th>
+              <th class="num">Part. qtd.</th>
+              <th class="num">Valor (mês ref.)</th>
+              <th class="num">YoY valor</th>
+              <th class="num">CAGR a.a.</th>
+              <th class="num">Ticket médio</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Estatística descritiva -->
+    <section class="cartao">
+      <h2>Estatística descritiva</h2>
+      <p class="cartao-desc" id="titulo-estatistica">Sobre a série mensal de cada forma.</p>
+      <div class="tabela-wrap">
+        <table class="tabela" id="tabela-estatistica">
+          <thead>
+            <tr>
+              <th>Forma</th>
+              <th class="num">Média</th>
+              <th class="num">Mediana</th>
+              <th class="num">Desvio-padrão</th>
+              <th class="num">Coef. variação</th>
+              <th class="num">Mínimo</th>
+              <th class="num">Máximo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="conteiner">
+      <p id="rodape-fonte"></p>
+      <p class="rodape-obs">Unidades: quantidade em milhares de transações; valor em R$ milhões.
+        Projeto de estudo — dados abertos do Banco Central do Brasil.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
