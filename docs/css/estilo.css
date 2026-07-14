@@ -98,6 +98,29 @@ main { padding: 24px 0 48px; }
 }
 .cartao h2 { margin: 0; font-size: 1.05rem; }
 .cartao-desc { margin: 4px 0 16px; color: var(--texto-suave); font-size: .86rem; }
+
+/* Cabeçalho de cartão com filtro de período */
+.cartao-cabecalho {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.cartao-titulo { min-width: 0; flex: 1 1 260px; }
+.cartao-cabecalho .cartao-desc { margin: 4px 0 0; }
+.filtro-periodo { display: flex; gap: 10px; flex-shrink: 0; }
+.filtro-campo {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: .7rem; font-weight: 600; color: var(--texto-suave);
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.sel-mes {
+  font: inherit; font-size: .85rem; font-weight: 500;
+  text-transform: none; letter-spacing: normal;
+  color: var(--texto); background: var(--bg);
+  border: 1px solid var(--borda); border-radius: 8px;
+  padding: 6px 10px; cursor: pointer; min-width: 92px;
+}
+.sel-mes:hover { border-color: var(--acento); }
+.sel-mes:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
 .graficos {
   display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px;
 }
