@@ -9,7 +9,7 @@ const CORES = {
 const OCULTAR_INICIAL = ["DOC", "TEC"]; // legados ~zerados: começam desligados no gráfico
 
 let dados = null;
-let metrica = "valor"; // "valor" | "quantidade"
+let metrica = "valor"; // "valor" | "quantidade" | "ticket"
 let graficoEvolucao = null;
 let graficoParticipacao = null;
 
@@ -62,7 +62,17 @@ function fmtQtdPreciso(x) {
   return `${nf(2).format(x)} mil`;
 }
 
-const fmtMetrica = (x) => (metrica === "valor" ? fmtValor(x) : fmtQtd(x));
+/** ticket médio em R$ -> texto (valor "cheio", já que é por transação, não em milhões/milhares). */
+function fmtTicket(x) {
+  if (x == null) return "—";
+  return `R$ ${nf(2).format(x)}`;
+}
+
+const fmtMetrica = (x) => {
+  if (metrica === "quantidade") return fmtQtd(x);
+  if (metrica === "ticket") return fmtTicket(x);
+  return fmtValor(x);
+};
 
 function fmtPct(x, comSinal = false) {
   if (x == null) return "—";
@@ -94,6 +104,18 @@ const cssVar = (nome) => getComputedStyle(document.body).getPropertyValue(nome).
 
 // ---------- Cálculos por período (recalculados no cliente conforme os filtros) ----------
 const num = (x) => (x == null ? 0 : x);
+
+/** Calcula e guarda em dados.series[forma].ticket a série de ticket médio (R$/transação). */
+function prepararSeriesTicket() {
+  dados.formas.forEach((f) => {
+    const v = dados.series[f].valor, q = dados.series[f].quantidade;
+    dados.series[f].ticket = v.map((valor, i) => {
+      const qtd = q[i];
+      if (valor == null || qtd == null || qtd === 0) return null;
+      return (valor * 1000) / qtd; // valor em R$ mi, qtd em mil transações -> R$/transação
+    });
+  });
+}
 
 /** YoY (%) do índice i vs. 12 meses antes, na série completa. */
 function yoyValor(serie, i) {
@@ -237,6 +259,8 @@ function renderEvolucao() {
   document.getElementById("titulo-evolucao").textContent =
     metrica === "valor"
       ? "Valor movimentado por forma (R$), por mês."
+      : metrica === "ticket"
+      ? "Ticket médio por transação, por forma, por mês."
       : "Quantidade de transações por forma, por mês.";
 
   if (graficoEvolucao) graficoEvolucao.destroy();
@@ -269,13 +293,18 @@ function renderEvolucao() {
 
 function renderParticipacao() {
   const ctx = document.getElementById("gParticipacao");
-  const campo = metrica === "valor" ? "valor_total" : "qtd_total";
+  // Ticket médio não é uma grandeza somável (não há "fatia" de ticket médio);
+  // nesse caso o gráfico mostra a participação por valor como referência.
+  const campoMetrica = metrica === "ticket" ? "valor" : metrica;
+  const campo = campoMetrica === "valor" ? "valor_total" : "qtd_total";
   const itens = [...dados.kpis.por_forma].sort((a, b) => b[campo] - a[campo]);
   const total = itens.reduce((s, x) => s + x[campo], 0);
 
   document.getElementById("titulo-participacao").textContent =
     metrica === "valor"
       ? "Fatia de cada forma no valor acumulado."
+      : metrica === "ticket"
+      ? "Ticket médio não é somável — exibindo fatia por valor acumulado como referência."
       : "Fatia de cada forma na quantidade acumulada.";
 
   if (graficoParticipacao) graficoParticipacao.destroy();
@@ -300,7 +329,7 @@ function renderParticipacao() {
           callbacks: {
             label: (i) => {
               const pct = total ? (i.parsed / total) * 100 : 0;
-              const bruto = metrica === "valor" ? fmtValor(i.parsed) : fmtQtd(i.parsed);
+              const bruto = campoMetrica === "valor" ? fmtValor(i.parsed) : fmtQtd(i.parsed);
               return `${i.label}: ${bruto} (${fmtPct(pct)})`;
             },
           },
@@ -338,11 +367,12 @@ function renderTabelaRanking() {
 
 function renderTabelaEstatistica() {
   const corpo = document.querySelector("#tabela-estatistica tbody");
-  const fmt = metrica === "valor" ? fmtValor : fmtQtd;
-  const fmtExato = metrica === "valor" ? fmtValorPreciso : fmtQtdPreciso;
+  const fmt = metrica === "quantidade" ? fmtQtd : metrica === "ticket" ? fmtTicket : fmtValor;
+  const fmtExato = metrica === "quantidade" ? fmtQtdPreciso : metrica === "ticket" ? fmtTicket : fmtValorPreciso;
+  const rotuloMetrica = metrica === "quantidade" ? "quantidade" : metrica === "ticket" ? "ticket médio (R$)" : "valor (R$)";
   document.getElementById("titulo-estatistica").textContent =
     `Série mensal no período ${fmtMesAnoCurto(dados.labels[estInicio])}–${fmtMesAnoCurto(dados.labels[estFim])} `
-    + `— métrica: ${metrica === "valor" ? "valor (R$)" : "quantidade"}.`;
+    + `— métrica: ${rotuloMetrica}.`;
 
   corpo.innerHTML = dados.formas.map((forma) => {
     const e = calcularEstatistica(forma, metrica, estInicio, estFim);
@@ -431,6 +461,8 @@ async function iniciar() {
     console.error(erro);
     return;
   }
+
+  prepararSeriesTicket();
 
   // Filtros começam cobrindo todo o período disponível.
   const ultimo = dados.labels.length - 1;
