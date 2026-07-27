@@ -9,10 +9,15 @@
 ## Contexto (leia antes de agir)
 
 Este é o projeto **Dados Financeiros Abertos (BCB)**. A fonte da verdade sobre organização,
-pastas e etapas é **`CONTEXTO.md`** na raiz — leia-o inteiro primeiro, principalmente:
+pastas e etapas é **`CONTEXTO.md`** na raiz — **leia só as seções abaixo, não o arquivo
+inteiro** (as demais seções tratam de outras fontes e não são relevantes para esta sessão):
 - Seção 5 (estrutura de pastas) e Seção 6 (Etapas 0 a 7).
 - Seção 7 (contrato tidy entre etapas: `ano_mes`, `forma_pagamento`, `quantidade`, `valor`).
 - Seção 9 (convenções: slug, nomes de arquivo por fonte).
+
+Da mesma forma, em `catalogo/fontes.md` leia apenas a seção `meios_pagamento_mensal` (fonte
+de referência) — não precisa ler o catálogo inteiro nem `catalogo/fontes-candidatas.md` além
+do item B1 já indicado abaixo.
 
 Já existe uma fonte implementada de ponta a ponta (`meios_pagamento_mensal`) — use-a como
 **modelo de referência** para código, nomenclatura e estilo (veja `src/config.py`,

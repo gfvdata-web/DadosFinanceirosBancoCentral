@@ -161,3 +161,27 @@ Lista de fontes implementadas (nome, status — detalhe em `catalogo/fontes.md`)
 - [ ] Etapa 4: sazonalidade, médias móveis, testes de tendência.
 - [ ] Etapa 6: filtros interativos, seletor de métrica (quantidade/valor), tema claro/escuro.
 - [ ] Etapa 7: automação de atualização (agendada) e melhorias de acessibilidade.
+
+## 12. Como abrir uma sessão para uma fonte nova
+
+Cada fonte nova (novo "braço" do projeto, com sua própria página de dashboard) tem um
+prompt dedicado em `prompts/fonte-XX-<slug>.md`. Esse arquivo é a unidade de contexto que
+se cola inteiro em uma sessão nova (normalmente modelo Opus) — ele já aponta exatamente o
+que ler, para não gastar tokens com o histórico de outras fontes.
+
+**Ao criar um prompt de fonte nova, sempre:**
+- Apontar só as seções necessárias deste `CONTEXTO.md` (tipicamente 5, 6, 7 e 9) — nunca
+  pedir para ler o arquivo inteiro.
+- Apontar só a seção correspondente em `catalogo/fontes.md` (a fonte de referência
+  `meios_pagamento_mensal`) e o item específico em `catalogo/fontes-candidatas.md` — nunca
+  o catálogo inteiro.
+- Descrever as Etapas 1→7 só para a fonte nova, reaproveitando `meios_pagamento_mensal`
+  como modelo de código/estilo (sem copiar detalhes de outras fontes já implementadas).
+
+**Prompts existentes:**
+- `prompts/fonte-06-credito-modalidade.md` — Crédito por modalidade (BCB/SGS).
+- `prompts/fonte-08-arrecadacao-federal.md` — Arrecadação Federal (RFB).
+
+**Para rodar:** abra uma conversa nova, cole o conteúdo do arquivo `prompts/fonte-XX-*.md`
+inteiro como primeira mensagem. Cada prompt é independente — pode rodar em paralelo, em
+janelas/sessões diferentes, sem uma interferir na outra.
