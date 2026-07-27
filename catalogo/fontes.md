@@ -46,7 +46,13 @@ Formas (`{Forma}`): `Pix`, `TED`, `TEC`, `Cheque`, `Boleto`, `DOC`.
 
 ## Fontes candidatas (a documentar)
 
-- BCB — SGS (Sistema Gerenciador de Séries Temporais): juros, câmbio, inflação.
-- BCB — Meios de Pagamento **trimestral** (`MeiosdePagamentosTrimestralDA`): inclui cartões.
-- Tesouro Transparente / Tesouro Direto.
-- IBGE / Portal Brasileiro de Dados Abertos (indicadores financeiros).
+Levantamento completo em [`fontes-candidatas.md`](fontes-candidatas.md) — 19 fontes oficiais
+e abertas (BCB, RFB, Tesouro/SICONFI, CGU, MDIC/Comex, IBGE, CVM, Ipea) com site, colunas,
+histórico, granularidade geográfica (Brasil/UF/município) e priorização de importação.
+
+Destaques de curto prazo:
+- **BCB — Estatísticas do Pix** (nacional + **por município**): estende esta fonte e entrega recorte territorial.
+- **BCB — SGS**: IPCA (deflacionar), SELIC, câmbio, crédito.
+- **BCB — Meios de Pagamento trimestral** (`MeiosdePagamentosTrimestralDA`): inclui cartões.
+- **RFB — Arrecadação** (nacional + por UF): tema impostos.
+- **Comex Stat** e **Portal da Transparência**: dados mensais por município.

@@ -132,12 +132,14 @@ Código em `docs/`.
 
 ## 8. Fontes de dados
 
-Detalhes completos em [`catalogo/fontes.md`](catalogo/fontes.md). Resumo da fonte inicial:
+Cada fonte tem seu dicionário de dados completo (URL, parâmetros, colunas, unidades,
+periodicidade, licença) em [`catalogo/fontes.md`](catalogo/fontes.md), uma seção por fonte.
+Este arquivo (`CONTEXTO.md`) não replica esse conteúdo — ao trabalhar em uma fonte específica,
+leia só a seção correspondente em `catalogo/fontes.md`, não o catálogo inteiro.
 
-- **BCB — Estatísticas de Meios de Pagamento (mensal)** — API Olinda/OData.
-  - Endpoint: `MeiosdePagamentosMensalDA` no serviço `MPV_DadosAbertos`.
-  - Colunas: `AnoMes` + `quantidade{Forma}`/`valor{Forma}` para Pix, TED, TEC, Cheque, Boleto, DOC.
-  - Unidades: **quantidade em milhares de transações**, **valor em R$ milhões**.
+Lista de fontes implementadas (nome, status — detalhe em `catalogo/fontes.md`):
+
+- `meios_pagamento_mensal` — ✅ concluída.
 
 ## 9. Convenções
 
