@@ -64,12 +64,14 @@ DadosFinanceirosBancoCentral/
 │   ├── brutos/              # respostas cruas da API (regeneráveis; fora do git)
 │   └── processados/         # dados tratados (CSV tidy)
 ├── docs/                    # Etapa 6 — site publicado (GitHub Pages)
-│   ├── index.html
-│   ├── css/estilo.css
-│   ├── js/app.js
+│   ├── index.html           # uma página por fonte (+ nav .nav-paineis entre elas)
+│   ├── css/estilo.css       # CSS único, compartilhado por todas as páginas
+│   ├── js/app.js            # um JS por página (js/<slug-com-hifen>.js)
 │   └── dados/               # JSON consumido pelos dashboards
+├── prompts/                 # um prompt por fonte nova (ver seção 12)
 └── catalogo/
-    └── fontes.md            # Etapa 1 — catálogo de fontes e dicionário de dados
+    ├── fontes.md            # Etapa 1 — catálogo de fontes e dicionário de dados
+    └── fontes-candidatas.md # Etapa 1 — levantamento de fontes ainda não implementadas
 ```
 
 ## 6. As Etapas
@@ -130,6 +132,14 @@ Código em `docs/`.
 **Formato tidy padrão (Etapa 3):** colunas `ano_mes` (YYYY-MM), `forma_pagamento`,
 `quantidade`, `valor`. Esse contrato deve ser mantido por todas as fontes similares.
 
+**Anatomia do contrato (para fontes com outras dimensões):** o que se mantém é a *forma* —
+**dimensões em linha, medidas em coluna**, sempre com `ano_mes` como primeira dimensão.
+Uma fonte com outro recorte troca as colunas de dimensão e de medida sem mudar a forma;
+ex.: `credito_modalidade` usa `ano_mes` + `segmento` + `modalidade_credito` como dimensões
+e `saldo` / `taxa_juros_aa` / `spread_pp` como medidas. Nenhuma fonte implementada tem
+recorte geográfico ainda — quando a primeira tiver, a coluna `uf` entra como mais uma
+dimensão, sem afetar as fontes que não a têm.
+
 ## 8. Fontes de dados
 
 Cada fonte tem seu dicionário de dados completo (URL, parâmetros, colunas, unidades,
@@ -139,7 +149,14 @@ leia só a seção correspondente em `catalogo/fontes.md`, não o catálogo inte
 
 Lista de fontes implementadas (nome, status — detalhe em `catalogo/fontes.md`):
 
-- `meios_pagamento_mensal` — ✅ concluída.
+- `meios_pagamento_mensal` — ✅ concluída. Página: `docs/index.html`.
+- `arrecadacao_federal` — ✅ concluída (RFB, XLSX, mensal 1994→2025, nacional).
+  Página: `docs/arrecadacao-federal.html`. Primeira fonte por **download de arquivo**
+  (não API) e primeira com **deflação por IPCA** (BCB/SGS 433) embutida no pipeline.
+- `credito_modalidade` — ✅ concluída (BCB/SGS, mensal mar/2011→, nacional).
+  Página: `docs/credito-modalidade.html`. Primeira fonte **multi-série** (61 códigos do
+  SGS, uma requisição cada) e primeira com **duas dimensões** (segmento PF/PJ × modalidade)
+  — ver a nota sobre o contrato tidy na seção 7.
 
 ## 9. Convenções
 
@@ -158,6 +175,9 @@ Lista de fontes implementadas (nome, status — detalhe em `catalogo/fontes.md`)
 ## 11. Roadmap curto
 
 - [ ] Etapa 1: documentar mais fontes (SGS/BCB, Tesouro, IBGE financeiro).
+      Feitas: `meios_pagamento_mensal`, `arrecadacao_federal`, `credito_modalidade`.
+- [ ] Etapa 3: avaliar reaproveitar o deflator IPCA (hoje interno à `arrecadacao_federal`)
+      como utilitário compartilhado quando uma segunda fonte precisar dele.
 - [ ] Etapa 4: sazonalidade, médias móveis, testes de tendência.
 - [ ] Etapa 6: filtros interativos, seletor de métrica (quantidade/valor), tema claro/escuro.
 - [ ] Etapa 7: automação de atualização (agendada) e melhorias de acessibilidade.

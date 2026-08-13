@@ -105,11 +105,17 @@
 - **Colunas:** data, indicador, base de cálculo, mediana, média, desvio-padrão, mín/máx, nº respondentes.
 - **Freq.:** diária/semanal · **Histórico:** ~2000→ · **Geo:** ⚪.
 
-### A6. Crédito — operações, juros e spread por modalidade
+### A6. Crédito — operações, juros e spread por modalidade ✅ implementada
 - **Site:** <https://dadosabertos.bcb.gov.br/dataset/> (vários datasets "20xxx"); base "Estatísticas monetárias e de crédito".
 - **Colunas:** modalidade (consignado, cartão, veículos, imobiliário...), taxa de juros, saldo, concessões, prazo, spread.
-- **Freq.:** mensal · **Histórico:** 2011→ · **Geo:** 🟡 há recortes por UF em alguns relatórios _(verificar)_.
+- **Freq.:** mensal · **Histórico:** 2011→ · **Geo:** ⚪ **nacional** _(verificado)_.
+- **Geo — verificado:** **não há** recorte por UF por modalidade. O SGS só publica crédito
+  por estado no corte de **porte de empresa** (PJ microempresa `25747+`, pequeno porte
+  `25925+`, MEI `27327+`) — outro recorte, que não se cruza com o de modalidade.
+  Fica como candidata separada, se um dia interessar o mapa de crédito por UF.
 - **Combina:** relaciona **volume de pagamentos** com **crédito e inadimplência**.
+- **Implementada como** `credito_modalidade` — dicionário em [`fontes.md`](fontes.md),
+  painel em `docs/credito-modalidade.html`.
 
 ### A7. IF.data — dados de instituições financeiras
 - **Site:** <https://www3.bcb.gov.br/ifdata/> · API Olinda.

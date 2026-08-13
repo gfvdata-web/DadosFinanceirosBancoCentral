@@ -7,10 +7,13 @@ oficiais abertas), com consumo via **API**, análise estatística em **Python** 
 > 📄 A organização completa do projeto e suas etapas está em **[CONTEXTO.md](CONTEXTO.md)**.
 > Cite a *Etapa* correspondente ao pedir mudanças (ex.: "melhorar a Etapa 4").
 
-## Estudo inicial
+## Painéis
 
-**BCB — Estatísticas de Meios de Pagamento (mensal):** quantidade e valor de movimentação
-por `AnoMes` e forma de pagamento (Pix, TED, TEC, Cheque, Boleto, DOC) no Brasil.
+| Página | Fonte | O que mostra |
+|--------|-------|--------------|
+| [`docs/index.html`](docs/index.html) | BCB — Meios de Pagamento (mensal) | Quantidade e valor por forma de pagamento (Pix, TED, TEC, Cheque, Boleto, DOC). |
+| [`docs/arrecadacao-federal.html`](docs/arrecadacao-federal.html) | RFB — Arrecadação das Receitas Federais | Arrecadação mensal por tributo (1994→), a preços correntes e constantes (IPCA). |
+| [`docs/credito-modalidade.html`](docs/credito-modalidade.html) | BCB — Crédito por modalidade (SGS) | Saldo, taxa de juros e spread por modalidade (2011→), separados em PF e PJ. |
 
 ## Como rodar
 
@@ -20,8 +23,10 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
-# 2. Pipeline completo (coleta -> tratamento -> publicação)
-python run_pipeline.py
+# 2. Pipeline completo (coleta -> tratamento -> publicação), uma fonte por vez
+python run_pipeline.py                          # fonte padrão (meios de pagamento)
+python run_pipeline.py arrecadacao_federal
+python run_pipeline.py credito_modalidade
 
 # 3. Dashboard (abrir o site local)
 #    servir a pasta docs/ e acessar no navegador

@@ -1,4 +1,5 @@
-/* ===== Painel Meios de Pagamento — Etapa 6 ===== */
+/* ===== Painéis de dados financeiros abertos — Etapa 6 =====
+   Folha compartilhada por todas as páginas (index.html, arrecadacao-federal.html). */
 :root {
   --bg: #f4f6fb;
   --superficie: #ffffff;
@@ -60,10 +61,22 @@ body {
 .cabecalho .subtitulo { margin: 8px 0 0; opacity: .92; max-width: 60ch; }
 .cabecalho .meta-info { margin: 14px 0 0; font-size: .82rem; opacity: .8; }
 
+/* Navegação entre os painéis */
+.nav-paineis { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.nav-paineis a {
+  color: #fff; text-decoration: none; font-size: .85rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .28);
+  transition: background .15s ease;
+}
+.nav-paineis a:hover { background: rgba(255, 255, 255, .26); }
+.nav-paineis a[aria-current="page"] { background: #fff; color: var(--acento); border-color: #fff; }
+
 main { padding: 24px 0 48px; }
 
 /* Controles */
-.controles { display: flex; align-items: center; gap: 12px; margin: 8px 0 20px; }
+.controles { display: flex; align-items: center; gap: 12px; margin: 8px 0 20px; flex-wrap: wrap; }
+.controles + .controles { margin-top: -8px; }
 .controles-rotulo { color: var(--texto-suave); font-size: .9rem; font-weight: 500; }
 .alternador {
   display: inline-flex; background: var(--superficie);
@@ -127,6 +140,8 @@ main { padding: 24px 0 48px; }
 .graficos .cartao { margin-bottom: 0; }
 .canvas-wrap { position: relative; height: 340px; }
 .grafico-grande .canvas-wrap { height: 360px; }
+/* Barras horizontais com muitas categorias (ex.: taxa por modalidade de crédito). */
+.canvas-alto { height: 480px; }
 
 /* Tabelas */
 .tabela-wrap { overflow-x: auto; }

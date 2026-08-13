@@ -22,6 +22,16 @@ PIPELINES = {
         "tratamento": "src.tratamento.meios_pagamento",
         "publicacao": "src.publicacao.meios_pagamento",
     },
+    "arrecadacao_federal": {
+        "coleta": "src.coleta.arrecadacao_federal",
+        "tratamento": "src.tratamento.arrecadacao_federal",
+        "publicacao": "src.publicacao.arrecadacao_federal",
+    },
+    "credito_modalidade": {
+        "coleta": "src.coleta.credito_modalidade",
+        "tratamento": "src.tratamento.credito_modalidade",
+        "publicacao": "src.publicacao.credito_modalidade",
+    },
 }
 
 
