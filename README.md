@@ -1,19 +1,31 @@
-# Dados Financeiros Abertos — Brasil
+# Dados Financeiros Abertos — Brasil (repositório arquivado)
+
+> ⚠️ **Este repositório foi dividido e está arquivado.** Ele reunia três fontes de dados no
+> mesmo lugar; desde ago/2026 cada fonte tem seu **próprio repositório**, autocontido, com
+> pipeline e painel independentes. Nada aqui se perdeu — tudo foi migrado.
+>
+> Este repositório permanece somente como **registro histórico** (histórico de commits
+> anterior à divisão). Não receba mudanças novas aqui.
+
+## Para onde foi cada coisa
+
+| O que era | Onde está agora | Painel |
+|-----------|-----------------|--------|
+| Visão global, catálogos, convenções | [`controle-global`](https://github.com/gfvdata-web/controle-global) | — |
+| BCB — Meios de Pagamento (mensal) | [`fonte-meios-pagamento`](https://github.com/gfvdata-web/fonte-meios-pagamento) | [painel](https://gfvdata-web.github.io/fonte-meios-pagamento/) |
+| RFB — Arrecadação das Receitas Federais | [`fonte-arrecadacao-federal`](https://github.com/gfvdata-web/fonte-arrecadacao-federal) | [painel](https://gfvdata-web.github.io/fonte-arrecadacao-federal/) |
+| BCB — Crédito por modalidade (SGS) | [`fonte-credito-modalidade`](https://github.com/gfvdata-web/fonte-credito-modalidade) | [painel](https://gfvdata-web.github.io/fonte-credito-modalidade/) |
+
+O mapa detalhado de migração (arquivo a arquivo) está em
+[`controle-global/GUIA-REPOSITORIOS.md`](https://github.com/gfvdata-web/controle-global/blob/main/GUIA-REPOSITORIOS.md).
+
+---
+
+## Conteúdo original (histórico)
 
 Exploração de **dados financeiros públicos brasileiros** (Banco Central e demais fontes
 oficiais abertas), com consumo via **API**, análise estatística em **Python** e
 **dashboards** em HTML + CSS + Chart.js publicados via **GitHub Pages**.
-
-> 📄 A organização completa do projeto e suas etapas está em **[CONTEXTO.md](CONTEXTO.md)**.
-> Cite a *Etapa* correspondente ao pedir mudanças (ex.: "melhorar a Etapa 4").
-
-## Painéis
-
-| Página | Fonte | O que mostra |
-|--------|-------|--------------|
-| [`docs/index.html`](docs/index.html) | BCB — Meios de Pagamento (mensal) | Quantidade e valor por forma de pagamento (Pix, TED, TEC, Cheque, Boleto, DOC). |
-| [`docs/arrecadacao-federal.html`](docs/arrecadacao-federal.html) | RFB — Arrecadação das Receitas Federais | Arrecadação mensal por tributo (1994→), a preços correntes e constantes (IPCA). |
-| [`docs/credito-modalidade.html`](docs/credito-modalidade.html) | BCB — Crédito por modalidade (SGS) | Saldo, taxa de juros e spread por modalidade (2011→), separados em PF e PJ. |
 
 ## Como rodar
 
